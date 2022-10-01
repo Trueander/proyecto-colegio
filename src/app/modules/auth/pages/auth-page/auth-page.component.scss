@@ -1,0 +1,67 @@
+$primary-color: #3f51b5;
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: $primary-color;
+
+    .example-card {
+        min-width: 400px;
+    }
+
+    mat-card-header {
+        display: flex;
+        justify-content: center;
+        
+
+        mat-icon {
+            font-size: 80px;
+            width: 80px;
+            color: $primary-color;
+        }
+    }
+
+    mat-card-content {
+        margin-top: 20px;
+
+        .input {
+            text-align: center;
+
+            mat-icon {
+                color: $primary-color;
+            }
+
+            mat-form-field {
+                display: block;
+                padding-bottom: 0px;
+                font-size: 17px;
+                margin-bottom: 0px;
+            }
+    
+            mat-form-field, button {
+                width: 80%;
+                margin: auto;
+            }
+
+            button {
+                margin-bottom: 20px;
+            }
+            
+        }
+
+
+    }
+
+
+
+    
+}
+
+.text-center {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+}
+

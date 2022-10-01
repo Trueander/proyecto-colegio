@@ -1,0 +1,23 @@
+
+<div class="container">
+    <h1 mat-dialog-title>Registrar curso</h1>
+
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="curso_form">
+        <div class="inputs">
+            <div class="input">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button mat-raised-button color="primary" class="button" (click)="crearAula()">Crear</button>
+            <button mat-raised-button class="button" (click)="onNoClick()">Canclear</button>
+        </div>
+
+    </form>
+</div>

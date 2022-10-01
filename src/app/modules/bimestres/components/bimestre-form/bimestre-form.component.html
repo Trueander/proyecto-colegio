@@ -1,0 +1,34 @@
+
+<div class="container">
+    <h1 mat-dialog-title>Registrar bimestre</h1>
+
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="bimestre_form">
+        <div class="inputs">
+            <div class="input">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre">
+                </mat-form-field>
+            </div>
+
+            <div class="input">
+                <mat-radio-group formControlName="activo">
+                    <mat-radio-button value="true" color="primary">
+                      Activo
+                    </mat-radio-button>
+                    <mat-radio-button value="false" color="accent">
+                      Inactivo
+                    </mat-radio-button>
+                  </mat-radio-group>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button mat-raised-button color="primary" class="button" (click)="crearbimestre()">Crear</button>
+            <button mat-raised-button class="button" (click)="onNoClick()">Canclear</button>
+        </div>
+
+    </form>
+</div>

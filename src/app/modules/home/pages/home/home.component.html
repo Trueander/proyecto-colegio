@@ -1,0 +1,39 @@
+<app-toolbar></app-toolbar>
+
+<mat-drawer-container class="example-container">
+
+    
+    <mat-drawer #drawer [opened]="true" class="example-sidenav" mode="side">
+        <div  class="header-image">
+            <div mat-card-avatar class="image">
+                <mat-icon>account_circle</mat-icon>
+            </div>
+            <div>
+                <h3>Anderson Bengolea</h3>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-list>
+            <div *ngFor="let ruta of rutas" style="cursor: pointer;">
+                <mat-list-item [routerLink]="[ruta.ruta]" [routerLinkActive]="['active', 'active-icon']">
+                    <div class="rutas">
+                        <div>
+                            <mat-icon [routerLinkActive]="['active-icon']">{{ruta.icon}}</mat-icon>
+                        </div>
+                        <div>{{ruta.nombre}}</div>
+                        
+                    </div>
+
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+          </mat-list>
+    </mat-drawer>
+  
+    <div class="example-sidenav-content">
+        
+      <router-outlet></router-outlet>
+       
+    </div>
+  
+  </mat-drawer-container>

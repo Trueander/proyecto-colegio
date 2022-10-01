@@ -1,0 +1,39 @@
+
+<div class="container">
+    <h1 mat-dialog-title>Registrar aula</h1>
+
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="aula_form">
+        <div class="inputs">
+            <div class="input">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre">
+                </mat-form-field>
+            </div>
+            <div class="input">
+                <mat-form-field appearance="outline">
+                    <mat-label>Sección</mat-label>
+                    <input matInput formControlName="seccion">
+                </mat-form-field>
+            </div>
+            <div class="input">
+                <mat-form-field appearance="outline">
+                    <mat-label>Seleccionar un grado</mat-label>
+                    <mat-select formControlName="grado">
+                      <mat-option *ngFor="let grado of grados" [value]="grado.id">
+                        {{grado.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button mat-raised-button color="primary" class="button" (click)="crearAula()">Crear</button>
+            <button mat-raised-button class="button" (click)="onNoClick()">Canclear</button>
+        </div>
+
+    </form>
+</div>

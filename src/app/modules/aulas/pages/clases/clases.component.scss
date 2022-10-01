@@ -1,0 +1,65 @@
+$card-title-color: #000000c3;
+$accent-color: #ff4081;
+
+:host{
+    .container {
+        padding: 20px;
+
+        h3{
+            font-weight: 500;
+        }
+
+        mat-divider {
+            margin-bottom: 20px;
+        }
+
+        .title {
+            display: flex;
+            margin-bottom: 20px;
+
+            h2 {
+                margin-bottom: 0;
+                margin-right: 20px;
+            }
+
+            button {
+                margin-right: 20px;
+            }
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            
+
+            .card {
+                width: 250px;
+                margin-right: 30px;
+                margin-bottom: 30px;
+
+                mat-card-title {
+                    color: $card-title-color;
+                    font-size: 17px;
+                }
+                
+
+                mat-card-content {
+                    margin-top: 30px;
+                    p {
+                        display: flex;
+                        align-items: center;
+
+                        mat-icon {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+    
+}

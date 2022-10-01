@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="card-line">
+    <mat-card >
+      <mat-card-header>
+          <div class="card-title">
+            <div><h2>Aprobados semanales del Bimestre 1</h2></div>
+            <div>
+              <mat-form-field appearance="legacy">
+                <mat-label>Seleccionar bimestre</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let food of foods" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+      </mat-card-header>
+      <mat-card-content>
+          <app-linechart></app-linechart>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="cards">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>
+          Aprobados y desaprobados por aula
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <app-barchart></app-barchart>
+      </mat-card-content>
+  </mat-card>
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>
+        Porcentaje de aprobados por aula
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <app-piechart></app-piechart>
+    </mat-card-content>
+  </mat-card>
+  </div>
+
+  
+</div>
+

@@ -1,0 +1,26 @@
+.container {
+    padding: 20px;
+
+    .card-title {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .card-line {
+        margin-bottom: 20px;
+    }
+
+    .cards {
+        display: flex;
+        justify-content: space-between;
+
+        .card {
+            width: 47%;
+            height: 250px;
+        }
+    }
+
+}
+
+

@@ -1,0 +1,169 @@
+<div class="container">
+  <div class="title">
+    <h2>Registro de notas</h2>
+  </div>
+  <mat-divider style="margin-bottom: 20px"></mat-divider>
+  <div class="cards">
+    <mat-card class="card"><mat-icon>calendar_today</mat-icon> {{bimestre.nombre}}</mat-card>
+    <mat-card class="card"><mat-icon>water_damage</mat-icon> 1ERO B</mat-card>
+    <mat-card class="card"><mat-icon>person</mat-icon> PEDRO ROBLES</mat-card>
+    <mat-card class="card"><mat-icon>menu_book</mat-icon> CIENCIA Y AMBIENTE</mat-card>
+  </div>
+
+
+  <form [formGroup]="form" autocomplete="off">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="Nombres">
+          <th mat-header-cell *matHeaderCellDef> Nombres y Apellidos </th>
+          <td mat-cell *matCellDef="let nota; let i = index;" [formGroup]="nota">
+            <!-- {{nota.estudiante.nombres}}  -->
+            <div class="nombre_estudiante">
+              <div class="index">{{i + 1}}. </div>
+              <input type="text" formControlName="estudiante">
+            </div>
+
+          </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="Sem 1">
+          <th mat-header-cell *matHeaderCellDef> Sem 1 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+              <mat-form-field floatLabel="never" class="nota" appearance="outline">
+                <input matInput placeholder="Title" formControlName="nota_semana_1" required>
+              </mat-form-field>
+          </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Sem 2">
+          <th mat-header-cell *matHeaderCellDef> Sem 2 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_semana_2" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Sem 3">
+          <th mat-header-cell *matHeaderCellDef> Sem 3 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota" > 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_semana_3" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Sem 4">
+          <th mat-header-cell *matHeaderCellDef> Sem 4 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_semana_4" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Sem 5">
+          <th mat-header-cell *matHeaderCellDef> Sem 5 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_semana_5" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Sem 6">
+          <th mat-header-cell *matHeaderCellDef> Sem 6 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_semana_6" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Sem 7">
+          <th mat-header-cell *matHeaderCellDef> Sem 7 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_semana_7" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Sem 8">
+          <th mat-header-cell *matHeaderCellDef> Sem 8 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_semana_8" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Tarea 1">
+          <th mat-header-cell *matHeaderCellDef> Tarea 1 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_tarea_1" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Tarea 2">
+          <th mat-header-cell *matHeaderCellDef> Tarea 2 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_tarea_2" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Tarea 3">
+          <th mat-header-cell *matHeaderCellDef> Tarea 3 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_tarea_3" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Tarea 4">
+          <th mat-header-cell *matHeaderCellDef> Tarea 4 </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_tarea_4" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Examen">
+          <th mat-header-cell *matHeaderCellDef> Examen bimestral </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="nota_examen_final" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Promedio">
+          <th mat-header-cell *matHeaderCellDef> Promedio Final </th>
+          <td mat-cell *matCellDef="let nota" [formGroup]="nota"> 
+            <mat-form-field floatLabel="never" class="nota" appearance="outline">
+              <input matInput placeholder="Title" formControlName="promedio_final" required>
+            </mat-form-field>
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </form>
+    <div class="buttons">
+      <button mat-raised-button color="primary">Guardar notas</button>
+    </div>
+</div>

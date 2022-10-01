@@ -1,0 +1,113 @@
+$primary-color: #3f51b5;
+
+:host {
+    height: 100%;
+    width: 100%;
+
+    
+    
+    .container {
+        padding: 20px;
+
+        .title {
+            display: flex;
+            margin-bottom: 20px;
+
+            h2 {
+                margin-bottom: 0;
+                margin-right: 20px;
+            }
+        }
+
+        .cards {
+            display: flex;
+            margin-bottom: 20px;
+            
+            .card {
+                margin-right: 15px;
+                display: flex;
+                align-items: center;
+                width: 180px;
+                font-size: 12px;
+
+                mat-icon {
+                    margin-right: 10px;
+                    color: $primary-color;
+                }
+            }
+        }
+
+
+        table {
+            width: 100%;
+
+            
+
+            .mat-header-row {
+                background-color: $primary-color;
+            }
+
+            .mat-header-cell{
+                height: 25px;
+                color: #fff;
+            }
+            .mat-column-Nombres {
+                border-right: 1px solid currentColor;
+            }
+
+             .mat-column-Sem-1, .mat-column-Sem-2,
+             .mat-column-Sem-3, .mat-column-Sem-4, .mat-column-Sem-5,
+             .mat-column-Sem-6, .mat-column-Sem-7, .mat-column-Sem-8,
+             .mat-column-Tarea-1, .mat-column-Tarea-2, .mat-column-Tarea-3, .mat-column-Tarea-4,
+              .mat-column-Examen, .mat-column-Promedio
+             {
+                border-right: 1px solid currentColor;
+                text-align: center;
+                width: 55px;
+            }
+
+            td {
+
+                .nota {
+                    width: 40px;
+                }
+
+                .nombre_estudiante {
+                    width: 100%;
+                    display: flex;
+
+                    .index {
+                        display: flex;
+                        align-items: center;
+                        margin-right: 5px;
+                        font-weight: 600;
+                    }
+
+                    input {
+                        width: 100%;
+                        background-color: transparent;
+                        border: none;
+                        padding: 10px 0 10px 0;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            .mat-column-Promedio {
+                padding-right: 0;
+            }
+          }
+    }
+
+    .buttons {
+        margin-top: 15px;
+    }
+}
+
+::ng-deep .mat-form-field-wrapper{
+    padding-bottom: 0;
+ }
+
+ ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 5px 0 8px 0;
+}

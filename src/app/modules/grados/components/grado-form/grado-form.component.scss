@@ -1,0 +1,27 @@
+:host {
+    .container {
+
+        mat-divider {
+            margin-bottom: 20px;
+        }
+        
+        .inputs {
+            .input {
+                width: 100%;
+                mat-form-field {
+                    width: 100%;
+                }
+            }
+        }
+
+        .buttons {
+            button {
+                width: 100px;
+            }
+
+            .button:nth-child(1) {
+                margin-right: 10px;
+            }
+        }
+    }
+}
