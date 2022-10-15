@@ -1,18 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Aula } from 'src/app/core/aula';
+import { Grado } from 'src/app/core/grado';
+import { GradoService } from 'src/app/modules/grados/services/grado.service';
 import { AulaFormComponent } from '../../components/aula-form/aula-form.component';
-
-interface Aula {
-  aula_id: string;
-  nombre: string;
-  seccion: string;
-  grado: Grado;
-}
-
-interface Grado {
-  grado_id: string;
-  nombre: string;
-}
+import { AulaService } from '../../services/aula.service';
 
 @Component({
   selector: 'app-aulas',
@@ -21,60 +13,70 @@ interface Grado {
 })
 export class AulasComponent implements OnInit {
 
-  longText = `The Shiba Inu `;
+  aulas: Aula[] = []
 
-  grado_2: Grado = {
-    grado_id:'5a25bc18-34de-47c2-bd60-723445404dc2', nombre: '2DO GRADO'
-  }
-
-  grado_1: Grado = {
-    grado_id:'5a25bc18-34de-47c2-bd60-723445404dc6', nombre: '1ER GRADO'
-  }
-
-  aula_1: Aula = {aula_id: '5a25bc18-32de-47c2-bd60-723445404dc6',nombre:'1ero', seccion: 'A', grado: this.grado_1}
-  aula_2: Aula = {aula_id: '5a25bc18-32ae-47c2-bd60-723445404dc6',nombre:'1ero', seccion: 'B', grado: this.grado_1}
-  aula_3: Aula = {aula_id: '2a25bc18-32de-47c2-bd60-723445404dc6',nombre:'1ero', seccion: 'C', grado: this.grado_1}
-  aula_4: Aula = {aula_id: '5a22bc18-32de-47c2-bd60-723445404dc6',nombre:'2do', seccion: 'A', grado: this.grado_2}
-  aula_5: Aula = {aula_id: '5125bc18-32de-47c2-bd60-723445404dc6',nombre:'2do', seccion: 'B', grado: this.grado_2}
-  aula_6: Aula = {aula_id: '5a25bc18-32de-47c2-bd60-723445401dc2',nombre:'2do', seccion: 'C', grado: this.grado_2}
-
-  aulas: Aula[] = [
-    this.aula_1,
-    this.aula_2,
-    this.aula_3,
-    this.aula_4,
-    this.aula_5,
-    this.aula_6,
-  ]
-
-  aulasPrimerGrado: Aula[] = [];
-  aulasSegundoGrado: Aula[] = [];
-  aulasTercerGrado: Aula[] = [];
-  aulasCuartoGrado: Aula[] = [];
-  aulasQuintoGrado: Aula[] = [];
-  aulasSextoGrado: Aula[] = [];
-
-  aulasPorGrado: Array<Aula[]> = []
+  grados: Grado[] = []
 
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private aulaService: AulaService, private gradoService: GradoService) { }
 
   ngOnInit(): void {
-    this.agruparPorGrado()
-    console.log(this.aulasPorGrado)
+    this.gradoService.listarGrados()
+        .subscribe({
+          next: response => {
+            this.grados = response;
+          },
+          error: error => console.log(error),
+          complete: () => console.log('Grados recuperados con éxito!')
+        })
+    this.aulaService.listarAulas()
+        .subscribe({
+          next: response => {
+            this.aulas = response
+            this.agruparPorGrado() 
+            console.log(this.grados) 
+          },
+          error: error => console.log(error),
+          complete: () => console.log('Aulas recuperadas con éxito!')
+        })
+    
   }
 
   agruparPorGrado() {
-    this.aulasPrimerGrado = this.aulas.filter(aula => aula.grado.grado_id == this.grado_1.grado_id);
-    this.aulasSegundoGrado = this.aulas.filter(aula => aula.grado.grado_id == this.grado_2.grado_id);
-    this.aulasPorGrado = [this.aulasPrimerGrado, this.aulasSegundoGrado];
+    this.aulas.forEach(aula => {
+      this.grados.forEach((grado, index) => {
+        if(grado.codigo === aula.grado.codigo){
+          if(!this.grados[index].aulas) {
+            this.grados[index].aulas = [];
+          }
+          this.grados[index].aulas.push(aula);
+        }
+      })
+    })
   }
 
   openDialog(): void {
-    this.dialog.open(AulaFormComponent, {
+    const aulaFormDialog = this.dialog.open(AulaFormComponent, {
       width: '400px',
       restoreFocus: false
     });
+
+    aulaFormDialog.afterClosed()
+    .subscribe(result => {
+      let aula: Aula = result
+
+      if(aula){
+        for (const grado of this.grados) {
+          if(grado.codigo == aula.grado.codigo) {
+            if(!grado.aulas) {
+              grado.aulas = [];
+            }
+            grado.aulas.push(aula);
+            return
+          }
+        }
+      }
+    })
   }
 
 }

@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+import { Docente } from 'src/app/core/docente';
 import { DocenteFormComponent } from '../../components/docente-form/docente-form.component';
+import { DocenteService } from '../../services/docente.service';
 
-interface Docente {
-  docente_id: string;
-  nombres: string;
-  apellidos: string;
-  dni: string;
-}
 
 @Component({
   selector: 'app-docentes',
@@ -16,28 +13,67 @@ interface Docente {
 })
 export class DocentesComponent implements OnInit {
 
-  displayedColumns: string[] = ['nombres', 'apellidos', 'dni','acciones'];
+  displayedColumns: string[] = ['nombres', 'apellidos', 'dni','estado','acciones'];
 
-  docentes: Docente[] = [
-    {docente_id: '3a5d21d1-28c3-4206-806e-59bc00119539', nombres:'JOSE RONALDO', apellidos: 'PERALES PORTA', dni: '70267152'},
-    {docente_id: '3a5d21d1-28c3-4206-806e-52bc00119539', nombres:'ROSA ROSITA', apellidos: 'CORALES REVER', dni: '70267153'},
-    {docente_id: '3a5d21d1-28c3-4206-806e-53bc00119539', nombres:'ARNOLD PEDRO ROBERTO', apellidos: 'MARQUEZ MARIAN', dni: '70467159'},
-    {docente_id: '3a5d21d1-28c3-4206-806e-54bc00119539', nombres:'GERARD MANUEL', apellidos: 'BENGOLEA SANCHEZ', dni: '740267159'},
-    {docente_id: '3a5d21d1-28c3-4206-806e-55bc00119539', nombres:'GENESIS MAITE', apellidos: 'ROSAS FLOR', dni: '73267159'},
-  ]
+  docentes: Docente[] = []
 
   dataSource = this.docentes;
 
-  constructor(public dialog: MatDialog) { }
+  @ViewChild(MatTable) table!: MatTable<any>;
+
+  constructor(public dialog: MatDialog, private docenteService: DocenteService) { }
 
   ngOnInit(): void {
+    this.docenteService.listarDocentes()
+        .subscribe({
+          next: (response: Docente[]) => {
+            this.docentes = response;
+            this.dataSource = this.docentes;
+          },
+          error: error => console.log(error)
+        })
   }
 
   openDialog(): void {
-    this.dialog.open(DocenteFormComponent, {
+    const docenteFormDialog = this.dialog.open(DocenteFormComponent, {
       width: '400px',
       restoreFocus: false
     });
+
+    docenteFormDialog.afterClosed()
+        .subscribe(result => {
+          let docente: Docente = result
+
+          if(docente){
+            this.docentes.push(docente);
+            this.table.renderRows();
+          }
+          
+        })
+  }
+
+  openDialogActualizar(docente: Docente): void {
+    let docenteFormDialog = this.dialog.open(DocenteFormComponent, {
+      data: {docente: docente},
+      width: '400px',
+      restoreFocus: false
+    });
+
+    docenteFormDialog.afterClosed()
+        .subscribe(result => {
+          let docente: Docente = result
+
+          if(docente){
+            this.docentes = this.docentes.map(g => {
+              if(g.codigo == docente.codigo){
+                g = docente;
+              }
+              return g
+            });
+            this.dataSource = this.docentes;
+            this.table.renderRows();
+          }
+        })
   }
 
 

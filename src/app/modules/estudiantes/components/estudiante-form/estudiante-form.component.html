@@ -30,20 +30,41 @@
                     <input matInput formControlName="celular_apoderado">
                 </mat-form-field>
             </div>
-            <div class="input">
+            <div class="input" *ngIf="aulaSeleccionada">
                 <mat-form-field appearance="outline">
                     <mat-label>Seleccionar un aula</mat-label>
-                    <mat-select formControlName="aula">
-                      <mat-option *ngFor="let aula of aulas" [value]="aula.aula_id">
+                    <mat-select formControlName="aula" [(value)]="aulaSeleccionada">
+                      <mat-option *ngFor="let aula of aulas" [value]="aula">
                         {{aula.nombre}} {{aula.seccion}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
             </div>
+            <div class="input" *ngIf="!aulaSeleccionada">
+                <mat-form-field appearance="outline">
+                    <mat-label>Seleccionar un aula</mat-label>
+                    <mat-select formControlName="aula">
+                      <mat-option *ngFor="let aula of aulas" [value]="aula">
+                        {{aula.nombre}} {{aula.seccion}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div class="input">
+                <mat-radio-group formControlName="activo">
+                    <mat-radio-button [value]="true" color="primary">
+                      Activo
+                    </mat-radio-button>
+                    <mat-radio-button [value]="false" color="accent">
+                      Inactivo
+                    </mat-radio-button>
+                  </mat-radio-group>
+            </div>
         </div>
 
         <div class="buttons">
-            <button mat-raised-button color="primary" class="button" (click)="crearDocente()">Crear</button>
+            <button mat-raised-button color="primary" class="button" (click)="crearEstudiante()" [disabled]="estudiante_form.invalid" *ngIf="!estudianteEncontrado">Crear</button>
+            <button mat-raised-button color="primary" class="button" (click)="actualizarEstudiante()" [disabled]="estudiante_form.invalid" *ngIf="estudianteEncontrado">Actualizar</button>
             <button mat-raised-button class="button" (click)="onNoClick()">Canclear</button>
         </div>
 

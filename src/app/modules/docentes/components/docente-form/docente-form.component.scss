@@ -12,6 +12,14 @@
                     width: 100%;
                 }
             }
+
+            .input:last-child {
+                margin-bottom: 20px;
+
+                mat-radio-button:last-child {
+                    margin-left: 20px;
+                }
+            }
         }
 
         .buttons {

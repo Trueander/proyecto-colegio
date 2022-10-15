@@ -8,15 +8,9 @@
         <div class="inputs">
             <div class="input">
                 <mat-form-field appearance="outline">
-                    <mat-label>Aula</mat-label>
-                    <input matInput formControlName="aula">
-                </mat-form-field>
-            </div>
-            <div class="input">
-                <mat-form-field appearance="outline">
                     <mat-label>Seleccionar un curso</mat-label>
                     <mat-select formControlName="curso">
-                      <mat-option *ngFor="let curso of cursos" [value]="curso.curso_id">
+                      <mat-option *ngFor="let curso of cursos" [value]="curso">
                         {{curso.nombre}}
                       </mat-option>
                     </mat-select>
@@ -26,7 +20,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Seleccionar un docente</mat-label>
                     <mat-select formControlName="docente">
-                      <mat-option *ngFor="let docente of docentes" [value]="docente.docente_id">
+                      <mat-option *ngFor="let docente of docentes" [value]="docente">
                         {{docente.nombres}} {{docente.apellidos}}
                       </mat-option>
                     </mat-select>

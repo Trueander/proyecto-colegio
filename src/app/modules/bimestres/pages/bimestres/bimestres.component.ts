@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+import { Bimestre } from 'src/app/core/bimestre';
 import { BimestreFormComponent } from '../../components/bimestre-form/bimestre-form.component';
+import { BimestreService } from '../../services/bimestre.service';
 
-interface Bimestre {
-  bimestre_id: string;
-  nombre: string;
-  activo: boolean;
-}
 
 @Component({
   selector: 'app-bimestres',
@@ -16,24 +14,64 @@ interface Bimestre {
 export class BimestresComponent implements OnInit {
   displayedColumns: string[] = ['nombre', 'estado', 'acciones'];
 
-  bimestres: Bimestre[] = [
-    {bimestre_id: '5a25bc18-32de-47c2-bd60-a23445404dc6', nombre:'BIMESTRE 1',activo: true},
-    {bimestre_id: '5a25bc18-32d2-47c2-bd10-a23445404dc6', nombre:'BIMESTRE 2',activo: false},
-    {bimestre_id: '5a25bc18-32d3-47c2-bd20-a23445404dc6', nombre:'BIMESTRE 3',activo: false},
-    {bimestre_id: '5a25bc18-32d4-47c2-bd30-a23445404dc6', nombre:'BIMESTRE 4',activo: false}
-  ]
+  bimestres: Bimestre[] = []
 
   dataSource = this.bimestres;
 
-  constructor(public dialog: MatDialog) { }
+  @ViewChild(MatTable) table!: MatTable<any>;
+
+  constructor(public dialog: MatDialog, private bimestreService: BimestreService) { }
 
   ngOnInit(): void {
+    this.bimestreService.listarBimestres()
+        .subscribe({
+          next: response => {
+            this.bimestres = response;
+            this.dataSource = this.bimestres;
+          },
+          error: error => console.log(error),
+          complete: () => console.log("Bimestres obtenidos !")
+        })
   }
 
   openDialog(): void {
-    this.dialog.open(BimestreFormComponent, {
+    let bimestreFormDialog = this.dialog.open(BimestreFormComponent, {
       width: '400px',
       restoreFocus: false
     });
+
+    bimestreFormDialog.afterClosed()
+        .subscribe(result => {
+          let bimestre: Bimestre = result
+
+          if(bimestre){
+            this.bimestres.push(bimestre);
+            this.table.renderRows();
+          }
+        })
+  }
+
+  openDialogActualizar(bimestre: Bimestre): void {
+    let bimestreFormDialog = this.dialog.open(BimestreFormComponent, {
+      data: {bimestre: bimestre},
+      width: '400px',
+      restoreFocus: false
+    });
+
+    bimestreFormDialog.afterClosed()
+        .subscribe(result => {
+          let bimestre: Bimestre = result
+
+          if(bimestre){
+            this.bimestres = this.bimestres.map(g => {
+              if(g.codigo == bimestre.codigo){
+                g = bimestre;
+              }
+              return g
+            });
+            this.dataSource = this.bimestres;
+            this.table.renderRows();
+          }
+        })
   }
 }

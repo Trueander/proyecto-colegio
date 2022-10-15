@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="title">
+        <h2>Reporte del estudiante</h2>
+        <form [formGroup]="form" novalidate (ngSubmit)="obtenerReporteNotas()">
+            <mat-form-field appearance="legacy" style="margin-right: 15px">
+                <mat-label>DNI</mat-label>
+                <input matInput placeholder="DNI" formControlName="dni" maxlength="8" minlength="8">
+              </mat-form-field>
+              <mat-form-field appearance="legacy" style="margin-right: 15px">
+                <mat-label>Seleccionar bimestre</mat-label>
+                <mat-select formControlName="cod_bimestre">
+                  <mat-option *ngFor="let bimestre of bimestres" [value]="bimestre.codigo" [disabled]="!bimestre.estado">
+                    {{bimestre.nombre}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+                <button mat-mini-fab color="primary" style="margin-bottom: 25px" type="submit">
+                  <mat-icon>search</mat-icon>
+                </button>
+        </form>
+
+    </div>
+
+    <div class="cards">
+        <mat-card class="card estudiante-card">
+            <mat-card-header>
+                <mat-card-title>Datos del estudiante</mat-card-title>
+              </mat-card-header>
+            <mat-card-content *ngIf="reporteNotaParticipacionEstudiante && reporteNotaParticipacionEstudiante[0]">
+                <mat-list>
+                    <mat-list-item>
+                        <div class="rutas">
+                            <div>
+                                <mat-icon >face_6</mat-icon>
+                            </div>
+                            <div>{{reporteNotaParticipacionEstudiante[0].estudiante.nombres}} {{reporteNotaParticipacionEstudiante[0].estudiante.apellidos}}</div>
+                            
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <div class="rutas">
+                            <div>
+                                <mat-icon >library_books</mat-icon>
+                            </div>
+                            <div>{{reporteNotaParticipacionEstudiante[0].estudiante.aula.nombre}} {{reporteNotaParticipacionEstudiante[0].estudiante.aula.seccion}}</div>
+                            
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <div class="rutas">
+                            <div>
+                                <mat-icon >grid_view</mat-icon>
+                            </div>
+                            <div>{{reporteNotaParticipacionEstudiante[0].bimestre.nombre}}</div>
+                            
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <div class="rutas">
+                            <div>
+                                <mat-icon >phone_iphone</mat-icon>
+                            </div>
+                            <div># apoderado - {{reporteNotaParticipacionEstudiante[0].estudiante.celular_apoderado}}</div>
+                            
+                        </div>
+                    </mat-list-item>
+                  </mat-list>
+              
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="card line-chart-card">
+            <mat-card-header>
+                <mat-card-title>Reporte de notas - Participación</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <app-linechart [reporteNotaParticipacionEstudiante]="reporteNotaParticipacionEstudiante" ></app-linechart>
+              </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="cards">
+        <div></div>
+        <mat-card class="card line-chart-card">
+            <mat-card-header>
+                <mat-card-title>Reporte de notas - Tarea</mat-card-title>
+              </mat-card-header>
+              <mat-card-content >
+                <app-linechart [reporteNotaTareaEstudiante]="reporteNotaTareaEstudiante" ></app-linechart>
+              </mat-card-content>
+        </mat-card>
+    </div>
+    
+</div>
+

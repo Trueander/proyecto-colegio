@@ -7,6 +7,7 @@ import { ClasesComponent } from './pages/clases/clases.component';
 import { RegistroNotasComponent } from './pages/registro-notas/registro-notas.component';
 import { AulaFormComponent } from './components/aula-form/aula-form.component';
 import { ClaseFormComponent } from './components/clase-form/clase-form.component';
+import { EnviarReporteComponent } from './components/enviar-reporte/enviar-reporte.component';
 
 
 
@@ -16,7 +17,8 @@ import { ClaseFormComponent } from './components/clase-form/clase-form.component
     ClasesComponent,
     RegistroNotasComponent,
     AulaFormComponent,
-    ClaseFormComponent
+    ClaseFormComponent,
+    EnviarReporteComponent
   ],
   imports: [
     CommonModule,

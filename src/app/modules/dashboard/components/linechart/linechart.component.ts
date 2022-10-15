@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Nota } from 'src/app/core/nota';
+import { NotaService } from 'src/app/modules/aulas/services/nota.service';
 
 @Component({
   selector: 'app-linechart',
@@ -6,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./linechart.component.scss']
 })
 export class LinechartComponent implements OnInit {
+
+  @Input() reporteNotaParticipacionEstudiante!: Nota[];
+  @Input() reporteNotaTareaEstudiante!: Nota[];
+  
   multi: any[] = [];
   view: any[] = [700, 300];
 
@@ -15,10 +21,10 @@ export class LinechartComponent implements OnInit {
   animations: boolean = true;
   xAxis: boolean = true;
   yAxis: boolean = true;
-  showYAxisLabel: boolean = false;
-  showXAxisLabel: boolean = false;
-  xAxisLabel: string = 'Year';
-  yAxisLabel: string = 'Population';
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Semanas';
+  yAxisLabel: string = 'Notas';
   timeline: boolean = true;
 
   colorScheme = {
@@ -26,199 +32,108 @@ export class LinechartComponent implements OnInit {
   };
 
   constructor() {
-    this.multi = [
-      {
-        name: '1ero A',
-        series: [
-          {
-            name: 'Sem 1',
-            value: 22,
-          },
-          {
-            name: 'Sem 2',
-            value: 33,
-          },
-          {
-            name: 'Sem 3',
-            value: 44,
-          },
-          {
-            name: 'Sem 4',
-            value: 15,
-          },
-          {
-            name: 'Sem 5',
-            value: 20,
-          },
-          {
-            name: 'Sem 6',
-            value: 12,
-          },
-          {
-            name: 'Sem 7',
-            value: 11,
-          },
-          {
-            name: 'Sem 8',
-            value: 33,
-          }
-        ],
-      },
-    
-      {
-        name: '1ero B',
-        series: [
-          {
-            name: 'Sem 1',
-            value: 11,
-          },
-          {
-            name: 'Sem 2',
-            value: 14,
-          },
-          {
-            name: 'Sem 3',
-            value: 11,
-          },
-          {
-            name: 'Sem 4',
-            value: 22,
-          },
-          {
-            name: 'Sem 5',
-            value: 33,
-          },
-          {
-            name: 'Sem 6',
-            value: 14,
-          },
-          {
-            name: 'Sem 7',
-            value: 15,
-          },
-          {
-            name: 'Sem 8',
-            value: 13,
-          }
-        ],
-      },
-    
-      {
-        name: '1ero C',
-        series: [
-          {
-            name: 'Sem 1',
-            value: 18,
-          },
-          {
-            name: 'Sem 2',
-            value: 33,
-          },
-          {
-            name: 'Sem 3',
-            value: 11,
-          },
-          {
-            name: 'Sem 4',
-            value: 20,
-          },
-          {
-            name: 'Sem 5',
-            value: 44,
-          },
-          {
-            name: 'Sem 6',
-            value: 14,
-          },
-          {
-            name: 'Sem 7',
-            value: 17,
-          },
-          {
-            name: 'Sem 8',
-            value: 18,
-          }
-        ],
-      },
-      {
-        name: '1ero D',
-        series: [
-          {
-            name: 'Sem 1',
-            value: 14,
-          },
-          {
-            name: 'Sem 2',
-            value: 20,
-          },
-          {
-            name: 'Sem 3',
-            value: 44,
-          },
-          {
-            name: 'Sem 4',
-            value: 42,
-          },
-          {
-            name: 'Sem 5',
-            value: 35,
-          },
-          {
-            name: 'Sem 6',
-            value: 34,
-          },
-          {
-            name: 'Sem 7',
-            value: 15,
-          },
-          {
-            name: 'Sem 8',
-            value: 40,
-          }
-        ],
-      },
-      {
-        name: '1ero E',
-        series: [
-          {
-            name: 'Sem 1',
-            value: 22,
-          },
-          {
-            name: 'Sem 2',
-            value: 24,
-          },
-          {
-            name: 'Sem 3',
-            value: 25,
-          },
-          {
-            name: 'Sem 4',
-            value: 44,
-          },
-          {
-            name: 'Sem 5',
-            value: 42,
-          },
-          {
-            name: 'Sem 6',
-            value: 43,
-          },
-          {
-            name: 'Sem 7',
-            value: 47,
-          },
-          {
-            name: 'Sem 8',
-            value: 46,
-          }
-        ],
-      }
-    ];
-
-    Object.assign(this, { multi: this.multi });
   }
   ngOnInit(): void {
   }
+
+  ngOnChanges() {
+    this.multi= [];
+    if(this.reporteNotaParticipacionEstudiante){
+      this.llenarSeriesParticipacionLineChart();
+    }
+
+    if(this.reporteNotaTareaEstudiante){
+      this.llenarSeriesTareaLineChart();
+    }
+
+    Object.assign(this, { multi: this.multi })
+  }
+
+
+  llenarSeriesParticipacionLineChart(){
+      this.reporteNotaParticipacionEstudiante.forEach((r: Nota) => {
+        this.multi.push({
+          "name": r.curso.nombre,
+          "series": [
+            {
+              name: 'Sem 1',
+              value: r.nota_semana_1,
+            },
+            {
+              name: 'Sem 2',
+              value: r.nota_semana_2,
+            },
+            {
+              name: 'Sem 3',
+              value: r.nota_semana_3,
+            },
+            {
+              name: 'Sem 4',
+              value: r.nota_semana_4,
+            },
+            {
+              name: 'Sem 5',
+              value: r.nota_semana_5,
+            },
+            {
+              name: 'Sem 6',
+              value: r.nota_semana_6,
+            },
+            {
+              name: 'Sem 7',
+              value: r.nota_semana_7,
+            },
+            {
+              name: 'Sem 8',
+              value: r.nota_semana_8,
+            }
+          ]
+        })
+        // this.multi = this.multi.sort(this.compare);
+      })
+  }
+
+  llenarSeriesTareaLineChart(){
+    this.reporteNotaTareaEstudiante.forEach((r: Nota) => {
+      this.multi.push({
+        "name": r.curso.nombre,
+        "series": [
+          {
+            name: 'Sem 1',
+            value: r.nota_tarea_1,
+          },
+          {
+            name: 'Sem 2',
+            value: r.nota_tarea_2,
+          },
+          {
+            name: 'Sem 3',
+            value: r.nota_tarea_3,
+          },
+          {
+            name: 'Sem 4',
+            value: r.nota_tarea_4,
+          },
+          {
+            name: 'Sem 5',
+            value: r.nota_tarea_5,
+          },
+          {
+            name: 'Sem 6',
+            value: r.nota_tarea_6,
+          },
+          {
+            name: 'Sem 7',
+            value: r.nota_tarea_6,
+          },
+          {
+            name: 'Sem 8',
+            value: r.nota_tarea_8,
+          }
+        ]
+      })
+      // this.multi = this.multi.sort(this.compare);
+    })
+}
 
 }

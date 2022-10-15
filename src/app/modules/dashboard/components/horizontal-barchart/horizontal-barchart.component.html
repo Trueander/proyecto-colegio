@@ -1,0 +1,16 @@
+<div style="width: 100%; height: 200px">
+    <ngx-charts-bar-horizontal *ngIf="reporteCursosDesaprobados"
+  [results]="single"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel">
+</ngx-charts-bar-horizontal>
+<div class="wrapper-message" *ngIf="!reporteCursosDesaprobados">
+  <h2>Realice una búsqueda para mostrar datos.</h2>
+</div>
+</div>

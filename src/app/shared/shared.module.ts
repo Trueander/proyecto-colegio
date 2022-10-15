@@ -18,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatRadioModule} from '@angular/material/radio';
+import { HttpClientModule } from '@angular/common/http';
+import {MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 
 const MaterialComponents = [
   MatCardModule,
@@ -35,10 +37,14 @@ const MaterialComponents = [
   MatChipsModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatRadioModule
+  MatRadioModule,
+  MatSnackBarModule
 ]
 
 @NgModule({
+  providers: [
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3500}}
+  ],
   declarations: [
     ToolbarComponent
   ],
@@ -46,14 +52,16 @@ const MaterialComponents = [
     MaterialComponents,
     NgxChartsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   exports: [
     MaterialComponents,
     ToolbarComponent,
     NgxChartsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ]
 })
 export class SharedModule { }

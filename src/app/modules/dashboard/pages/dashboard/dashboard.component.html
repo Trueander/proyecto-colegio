@@ -1,50 +1,150 @@
 <div class="container">
+
+  <div class="cards-info">
+    <mat-card class="card">
+      <mat-card-content>
+        <div>
+          <h2>Estudiantes</h2>
+          <h2> {{estudiantes.length}}</h2>
+        </div>
+        <div>
+          <mat-icon >face_6</mat-icon>
+        </div>
+          
+      </mat-card-content>
+  </mat-card>
+  <mat-card class="card">
+    <mat-card-content>
+      <div>
+        <h2>Docentes</h2>
+        <h2> {{docentes.length}}</h2>
+      </div>
+      <div>
+        <mat-icon >groups</mat-icon>
+      </div>
+        
+    </mat-card-content>
+</mat-card>
+  <mat-card class="card">
+    <mat-card-content>
+      <div>
+        <h2>Aulas</h2>
+        <h2>{{aulas.length}}</h2>
+      </div>
+      <div>
+        <mat-icon >library_books</mat-icon>
+      </div>
+        
+    </mat-card-content>
+</mat-card>
+<mat-card class="card">
+  <mat-card-content>
+    <div>
+      <h2>Cursos</h2>
+      <h2>{{cursos.length}}</h2>
+    </div>
+    <div>
+      <mat-icon >auto_stories</mat-icon>
+    </div>
+      
+  </mat-card-content>
+</mat-card>
+  </div>
+
+
+  <div class="title">
+    <div>
+      <button mat-stroked-button color="accent" [routerLink]="['estudiante']">Abrir reporte por estudiante</button>
+    </div>
+    <form [formGroup]="form" novalidate (ngSubmit)="obtenerReporteNotas()">
+    <div class="combos-box">
+      
+        <div>
+          <mat-form-field appearance="legacy">
+            <mat-label>Seleccionar bimestre</mat-label>
+            <mat-select formControlName="cod_bimestre">
+              <mat-option *ngFor="let bimestre of bimestres" [value]="bimestre.codigo" [disabled]="!bimestre.estado">
+                {{bimestre.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="legacy">
+            <mat-label>Seleccionar grado</mat-label>
+            <mat-select formControlName="cod_grado">
+              <mat-option *ngFor="let grado of grados" [value]="grado.codigo">
+                {{grado.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="legacy">
+            <mat-label>Seleccionar curso</mat-label>
+            <mat-select formControlName="cod_curso">
+              <mat-option *ngFor="let curso of cursos" [value]="curso.codigo">
+                {{curso.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="legacy">
+            <mat-label>Seleccionar semana</mat-label>
+            <mat-select formControlName="semana">
+              <mat-option *ngFor="let semana of semanas" [value]="semana.value" [disabled]="semana.deshabilitado">
+                {{semana.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-mini-fab color="primary" type="submit" style="margin-bottom: 25px">
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      
+      
+  </div>
+</form>
+    </div>
+    
+
   <div class="card-line">
     <mat-card >
       <mat-card-header>
           <div class="card-title">
-            <div><h2>Aprobados semanales del Bimestre 1</h2></div>
-            <div>
-              <mat-form-field appearance="legacy">
-                <mat-label>Seleccionar bimestre</mat-label>
-                <mat-select>
-                  <mat-option *ngFor="let food of foods" [value]="food.value">
-                    {{food.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+            <div><h2>Desaprobados por aula</h2></div>
           </div>
       </mat-card-header>
-      <mat-card-content>
-          <app-linechart></app-linechart>
+      <mat-card-content >
+        <app-barchart [reporteNotas]="respuestaReporteNotas" [codigoCurso]="codigoCurso"></app-barchart>
       </mat-card-content>
     </mat-card>
-  </div>
-
+  </div> 
+  
   <div class="cards">
     <mat-card class="card">
       <mat-card-header>
         <mat-card-title>
-          Aprobados y desaprobados por aula
+          Cursos con más desaprobados
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-          <app-barchart></app-barchart>
+          <app-horizontal-barchart [reporteCursosDesaprobados]="reporteCursosDesaprobados"></app-horizontal-barchart>
       </mat-card-content>
   </mat-card>
   <mat-card class="card">
     <mat-card-header>
       <mat-card-title>
-        Porcentaje de aprobados por aula
+        Curso con más aprobados
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <app-piechart></app-piechart>
+      <app-horizontal-barchart [reporteCursosDesaprobados]="reporteCursosDesaprobados" [cursosMasAprobadosActivo]="true"></app-horizontal-barchart>
     </mat-card-content>
   </mat-card>
   </div>
-
-  
 </div>
 

@@ -1,0 +1,42 @@
+$primary-color: #3f51b5;
+$accent-color: #ff4081;
+
+.container {
+    padding: 20px;
+
+    .cards {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 20px;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        .estudiante-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .line-chart-card {
+            height: 240px;
+
+            mat-card-header {
+                margin-bottom: 20px;
+            }
+        }
+
+        
+    }
+
+    .rutas {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        
+      
+        mat-icon {
+          color: $primary-color;
+          margin-right: 15px;
+        }
+      }
+
+}

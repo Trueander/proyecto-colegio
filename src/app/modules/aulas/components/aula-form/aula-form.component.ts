@@ -1,7 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Grado } from 'src/app/core/grado';
+import { GradoService } from 'src/app/modules/grados/services/grado.service';
 import { AulasComponent } from '../../pages/aulas/aulas.component';
+import { AulaService } from '../../services/aula.service';
 
 @Component({
   selector: 'app-aula-form',
@@ -12,23 +16,38 @@ export class AulaFormComponent implements OnInit {
 
   aula_form!: FormGroup;
 
-  grados: any[] = [
-    {id:'AXS',nombre: '1ER GRADO'},
-    {id:'AXZ',nombre: '2DO GRADO'},
-    {id:'AXQ' ,nombre: '3ER GRADO'},
-  ];
+  grados: Grado[] = [];
 
   constructor(public dialogRef: MatDialogRef<AulasComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private gradoService: GradoService,
+    private aulaService: AulaService,
+    private _snackBar: MatSnackBar) {
     this.inicializarAulaFormGroup();
    }
 
   ngOnInit(): void {
-    
+    this.gradoService.listarGrados()
+        .subscribe({
+          next: response => this.grados = response,
+          error: error => console.log(error),
+          complete: () => console.log("Grado obtenidos!")
+        })
   }
 
   crearAula() {
     console.log(this.aula_form.value)
+    this.aulaService.crearAula(this.aula_form.value)
+    .subscribe({
+      next: response => this.dialogRef.close(response),
+      error: error => console.log(error),
+      complete: () => {
+        this._snackBar.open('Aula creada','Cerrar',{
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        })
+      }
+    })
   }
 
   inicializarAulaFormGroup() {

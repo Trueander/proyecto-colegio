@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+import { Curso } from 'src/app/core/curso';
 import { CursoFormComponent } from '../../components/curso-form/curso-form.component';
+import { CursoService } from '../../services/curso.service';
 
-interface Curso {
-  curso_id: string;
-  nombre: string;
-}
 
 @Component({
   selector: 'app-cursos',
@@ -16,30 +15,65 @@ export class CursosComponent implements OnInit {
 
   displayedColumns: string[] = ['nombre', 'acciones'];
 
-  cursos: Curso[] = [
-    {curso_id: '5a25bc18-32de-47c2-bd60-a23445404dc6', nombre:'MATEMÁTICA'},
-    {curso_id: '5a25bc18-32de-47c2-bd10-a23445404dc6', nombre:'COMUNICACIÓN'},
-    {curso_id: '5a25bc18-32de-47c2-bd20-a23445404dc6', nombre:'CTA'},
-    {curso_id: '5a25bc18-32de-47c2-bd30-a23445404dc6', nombre:'PERSONAL SOCIAL'},
-    {curso_id: '5a25bc18-32de-47c2-bd40-a23445404dc6', nombre:'QUÍMICA'},
-    {curso_id: '5a25bc18-32de-47c2-bd50-a23445404dc6', nombre:'EDUCACIÓN FÍSICA'},
-    {curso_id: '5a25bc18-32de-47c2-bd70-a23445404dc6', nombre:'INGLÉS'},
-    {curso_id: '5a25bc18-32de-47c2-bd80-a23445404dc6', nombre:'ARTE'},
-    {curso_id: '5a25bc18-32de-47c2-bd90-a23445404dc6', nombre:'HISTORIA'}
-  ]
+  cursos: Curso[] = []
 
   dataSource = this.cursos;
 
-  constructor(public dialog: MatDialog) { }
+  @ViewChild(MatTable) table!: MatTable<any>;
+
+  constructor(public dialog: MatDialog, private cursoService: CursoService) { }
 
   ngOnInit(): void {
+    this.cursoService.listarCursos()
+        .subscribe({
+          next: response => {
+            this.cursos = response;
+            this.dataSource = this.cursos
+          },
+          error: error => console.log(error),
+          complete: () => console.log("Cursos obtenidos con éxito!")
+        })
   }
 
   openDialog(): void {
-    this.dialog.open(CursoFormComponent, {
+    const cursoFormDialog = this.dialog.open(CursoFormComponent, {
       width: '400px',
       restoreFocus: false
     });
+
+    cursoFormDialog.afterClosed()
+    .subscribe(result => {
+      let curso: Curso = result
+
+      if(curso){
+        this.cursos.push(curso);
+        this.table.renderRows();
+      }
+    })
+  }
+
+  openDialogActualizar(curso: Curso): void {
+    let cursoFormDialog = this.dialog.open(CursoFormComponent, {
+      data: {curso: curso},
+      width: '400px',
+      restoreFocus: false
+    });
+
+    cursoFormDialog.afterClosed()
+        .subscribe(result => {
+          let curso: Curso = result
+
+          if(curso){
+            this.cursos = this.cursos.map(g => {
+              if(g.codigo == curso.codigo){
+                g = curso;
+              }
+              return g
+            });
+            this.dataSource = this.cursos;
+            this.table.renderRows();
+          }
+        })
   }
 
 }

@@ -15,7 +15,8 @@
         </div>
 
         <div class="buttons">
-            <button mat-raised-button color="primary" class="button" (click)="crearAula()">Crear</button>
+            <button mat-raised-button color="primary" class="button" (click)="crearAula()" [disabled]="curso_form.invalid" *ngIf="!cursoEncontrado">Crear</button>
+            <button mat-raised-button color="primary" class="button" (click)="actualizarCurso()" [disabled]="curso_form.invalid" *ngIf="cursoEncontrado">Actualizar</button>
             <button mat-raised-button class="button" (click)="onNoClick()">Canclear</button>
         </div>
 

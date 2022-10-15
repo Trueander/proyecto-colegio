@@ -23,10 +23,24 @@
           <th mat-header-cell *matHeaderCellDef> DNI </th>
           <td mat-cell *matCellDef="let docente"> {{docente.dni}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let docente">
+            <mat-chip-list aria-label="Dog selection">
+              <mat-chip color="primary" selected *ngIf="docente.estado">
+                Activo
+              </mat-chip>
+              <mat-chip color="accent" selected *ngIf="!docente.estado">
+                Inactivo
+              </mat-chip>
+            </mat-chip-list>
+          </td>
+        </ng-container>
       
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef> Acciones</th>
-          <td mat-cell *matCellDef="let docente"> <button mat-stroked-button color="accent"><mat-icon>edit</mat-icon></button></td>
+          <td mat-cell *matCellDef="let docente"> <button mat-stroked-button color="accent" (click)="openDialogActualizar(docente)"><mat-icon>edit</mat-icon></button></td>
         </ng-container>
       
       

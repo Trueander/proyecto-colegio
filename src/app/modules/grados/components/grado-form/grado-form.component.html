@@ -15,7 +15,8 @@
         </div>
 
         <div class="buttons">
-            <button mat-raised-button color="primary" class="button" (click)="crearGrado()">Crear</button>
+            <button mat-raised-button color="primary" class="button" (click)="crearGrado()" [disabled]="grado_form.invalid" *ngIf="!gradoEncontrado">Crear</button>
+            <button mat-raised-button color="primary" class="button" (click)="actualizarGrado()" [disabled]="grado_form.invalid" *ngIf="gradoEncontrado">Actualizar</button>
             <button mat-raised-button class="button" (click)="onNoClick()">Canclear</button>
         </div>
 

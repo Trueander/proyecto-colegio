@@ -14,11 +14,11 @@
             </div>
 
             <div class="input">
-                <mat-radio-group formControlName="activo">
-                    <mat-radio-button value="true" color="primary">
+                <mat-radio-group formControlName="estado">
+                    <mat-radio-button [value]="true" color="primary">
                       Activo
                     </mat-radio-button>
-                    <mat-radio-button value="false" color="accent">
+                    <mat-radio-button [value]="false" color="accent">
                       Inactivo
                     </mat-radio-button>
                   </mat-radio-group>
@@ -26,7 +26,8 @@
         </div>
 
         <div class="buttons">
-            <button mat-raised-button color="primary" class="button" (click)="crearbimestre()">Crear</button>
+            <button mat-raised-button color="primary" class="button" (click)="crearbimestre()" [disabled]="bimestre_form.invalid" *ngIf="!bimestreEncontrado">Crear</button>
+            <button mat-raised-button color="primary" class="button" (click)="actualizarBimestre()" [disabled]="bimestre_form.invalid" *ngIf="bimestreEncontrado">Actualizar</button>
             <button mat-raised-button class="button" (click)="onNoClick()">Canclear</button>
         </div>
 

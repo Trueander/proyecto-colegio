@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-barchart',
@@ -7,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BarchartComponent implements OnInit {
 
+  @Input() reporteNotas: any;
+
+  codigo_aula!: number;
+  @Input() codigoCurso!: number;
   
   single: any[] = [];
   multi: any[] = [];
@@ -25,89 +30,71 @@ export class BarchartComponent implements OnInit {
 
   colorScheme = 
     [
-      {name:'Aprobado', value: '#3f51b5'},
-      {name:'Desaprobado', value: '#e86060'}
+      {name:'Aprobado', value: 'rgb(122, 163, 229)'},
+      {name:'Desaprobado', value: 'rgb(168, 56, 93)'}
     ]
   ;
  
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.multi = [
-      {
-        "name": "1ero A",
-        "series": [
-          {
-            "name": "Aprobado",
-            "value": 24
-          },
-          {
-            "name": "Desaprobado",
-            "value": 6
-          }
-        ]
-      },
-    
-      {
-        "name": "1ero B",
-        "series": [
-          {
-            "name": "Aprobado",
-            "value": 25
-          },
-          {
-            "name": "Desaprobado",
-            "value": 4
-          }
-        ]
-      },
-    
-      {
-        "name": "1ero C",
-        "series": [
-          {
-            "name": "Aprobado",
-            "value": 23
-          },
-          {
-            "name": "Desaprobado",
-            "value": 7
-          }
-        ]
-      },
-      {
-        "name": "1ero D",
-        "series": [
-          {
-            "name": "Aprobado",
-            "value": 13
-          },
-          {
-            "name": "Desaprobado",
-            "value": 16
-          }
-        ]
-      },
-      {
-        "name": "1ero E",
-        "series": [
-          {
-            "name": "Aprobado",
-            "value": 16
-          },
-          {
-            "name": "Desaprobado",
-            "value": 15
-          }
-        ]
-      }
-    ];
+    if(this.reporteNotas){
+      this.cargarDatosDelReporte();
+    }
+
     Object.assign(this, { multi: this.multi })
   }
 
-  onSelect(event: any) {
-    console.log(event);
+  ngOnChanges() {
+    this.multi= [];
+    if(this.reporteNotas){
+      this.cargarDatosDelReporte();
+    }
+
+    Object.assign(this, { multi: this.multi })
+  }
+
+  cargarDatosDelReporte() {
+    this.reporteNotas.forEach((r: any) => {
+      let array = r.nombre_aula.split(" ");
+      let nombreAula = `${array[1]} ${array[2]}`
+      this.codigo_aula = array[0]
+      this.multi.push({
+        "name": nombreAula,
+        "series": [
+          {
+            "name": "Aprobado",
+            "value": r.aprobados,
+            "extra": {
+              "codigo_aula": this.codigo_aula
+            }
+          },
+          {
+            "name": "Desaprobado",
+            "value": r.desaprobados,
+            "extra": {
+              "codigo_aula": this.codigo_aula
+            }
+          }
+        ]
+      })
+      this.multi = this.multi.sort(this.compare);
+    })
+  }
+
+  onSelect() {
+    this.router.navigate([`aulas/${this.codigo_aula}/clases/${this.codigoCurso}`])
+  }
+
+  compare( a: any, b: any ) {
+    if ( a.name < b.name ){
+      return -1;
+    }
+    if ( a.name > b.name ){
+      return 1;
+    }
+    return 0;
   }
 
 }

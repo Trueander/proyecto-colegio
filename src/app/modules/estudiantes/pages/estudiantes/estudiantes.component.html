@@ -33,10 +33,24 @@
             <th mat-header-cell *matHeaderCellDef> Aula</th>
             <td mat-cell *matCellDef="let estudiante"> {{estudiante.aula.nombre}} {{estudiante.aula.seccion}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let estudiante">
+            <mat-chip-list aria-label="Dog selection">
+              <mat-chip color="primary" selected *ngIf="estudiante.activo">
+                Activo
+              </mat-chip>
+              <mat-chip color="accent" selected *ngIf="!estudiante.activo">
+                Inactivo
+              </mat-chip>
+            </mat-chip-list>
+          </td>
+        </ng-container>
       
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef> Acciones</th>
-          <td mat-cell *matCellDef="let estudiante"> <button mat-stroked-button color="accent"><mat-icon>edit</mat-icon></button></td>
+          <td mat-cell *matCellDef="let estudiante"> <button mat-stroked-button color="accent"   (click)="openDialogActualizar(estudiante)"><mat-icon>edit</mat-icon></button></td>
         </ng-container>
       
       

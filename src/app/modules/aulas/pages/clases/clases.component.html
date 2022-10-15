@@ -1,8 +1,9 @@
 <div class="container">
   <div class="title">
-    <h2>Clases - 1ero A</h2>
+    <h2 *ngIf="aula">Clases - {{aula.nombre}} {{aula.seccion}}</h2>
     <button mat-stroked-button color="accent" (click)="openDialog()">Registrar nueva clase</button>
-    <button mat-stroked-button color="primary" class="button-right">Enviar reporte de notas</button>
+    <button mat-stroked-button color="primary" class="button-right" (click)="openDialogReporte()">Enviar reporte de notas</button>
+    <button mat-stroked-button color="basic" (click)="retroceder()" ><mat-icon>arrow_back</mat-icon> Regresar</button>
   </div>
     <mat-divider></mat-divider>
     <div class="cards">
@@ -13,7 +14,7 @@
               <p><mat-icon>person</mat-icon>{{clase.docente.nombres}} {{clase.docente.apellidos}}</p>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-stroked-button color="primary" [routerLink]="[clase.clase_id]">Registrar notas</button>
+              <button mat-stroked-button color="primary" [routerLink]="[clase.codigo]">Registrar notas</button>
             </mat-card-actions>
           </mat-card>
     </div>

@@ -1,27 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+import { Estudiante } from 'src/app/core/estudiante';
 import { EstudianteFormComponent } from '../../components/estudiante-form/estudiante-form.component';
-
-interface Estudiante {
-  estudiante_id: string;
-  nombres: string;
-  apellidos: string;
-  dni: string;
-  celular_apoderado: string;
-  aula: Aula;
-}
-
-interface Aula {
-  aula_id: string;
-  nombre: string;
-  seccion: string;
-  grado: Grado;
-}
-
-interface Grado {
-  grado_id: string;
-  nombre: string;
-}
+import { EstudianteService } from '../../services/estudiante.service';
 
 @Component({
   selector: 'app-estudiantes',
@@ -30,33 +12,66 @@ interface Grado {
 })
 export class EstudiantesComponent implements OnInit {
 
-  displayedColumns: string[] = ['nombres', 'apellidos', 'dni', 'celular_apoderado', 'aula', 'acciones'];
+  displayedColumns: string[] = ['nombres', 'apellidos', 'dni', 'celular_apoderado', 'aula', 'estado', 'acciones'];
 
-  grado_1: Grado = {
-    grado_id:'5a25bc18-34de-47c2-bd60-723445404dc6', nombre: '1ER GRADO'
-  }
-
-  aula_1: Aula = {aula_id: '5a25bc18-32de-47c2-bd60-723445404dc6',nombre:'1ERO', seccion: 'A', grado: this.grado_1}
-  estudiantes: Estudiante[] = [
-    {estudiante_id: '4ase2-eewss', nombres: 'ANDERSON', apellidos:'BENGOLEA SÁNCHEZ',dni:'70267159',celular_apoderado:'998877122', aula: this.aula_1},
-    {estudiante_id: '4ase2-eewss', nombres: 'JOSE', apellidos:'CARMENAN GONZALES',dni:'70267122',celular_apoderado:'928477133', aula: this.aula_1},
-    {estudiante_id: '4ase2-eewss', nombres: 'ROBERTO', apellidos:'AROTINCO VILLAVERDE',dni:'70267459',celular_apoderado:'948851133', aula: this.aula_1},
-    {estudiante_id: '4ase2-eewss', nombres: 'HELY', apellidos:'PERALES MANZANA',dni:'70265159',celular_apoderado:'928227313', aula: this.aula_1}
-  ]
+  estudiantes: Estudiante[] = []
 
   dataSource = this.estudiantes;
 
+  @ViewChild(MatTable) table!: MatTable<any>;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private estudianteService: EstudianteService) { }
 
   ngOnInit(): void {
+    this.estudianteService.listarEstudiantes()
+        .subscribe({
+          next: response => {
+            this.estudiantes = response;
+            this.dataSource = this.estudiantes
+          },
+          error: error => console.log(error),
+          complete: () => console.log("Estudiantes obtenidos con éxito!")
+        })
   }
 
   openDialog(): void {
-    this.dialog.open(EstudianteFormComponent, {
+    const estudianteFormDialog = this.dialog.open(EstudianteFormComponent, {
       width: '400px',
       restoreFocus: false
     });
+
+    estudianteFormDialog.afterClosed()
+    .subscribe(result => {
+      let estudiante: Estudiante = result
+
+      if(estudiante){
+        this.estudiantes.push(estudiante);
+        this.table.renderRows();
+      }
+    })
   }
 
+  openDialogActualizar(estudiante: Estudiante): void {
+    let estudianteFormDialog = this.dialog.open(EstudianteFormComponent, {
+      data: {estudiante: estudiante},
+      width: '400px',
+      restoreFocus: false
+    });
+
+    estudianteFormDialog.afterClosed()
+        .subscribe(result => {
+          let estudiante: Estudiante = result
+
+          if(estudiante){
+            this.estudiantes = this.estudiantes.map(g => {
+              if(g.codigo == estudiante.codigo){
+                g = estudiante;
+              }
+              return g
+            });
+            this.dataSource = this.estudiantes;
+            this.table.renderRows();
+          }
+        })
+  }
 }

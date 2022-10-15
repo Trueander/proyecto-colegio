@@ -24,11 +24,22 @@
                     <input matInput formControlName="dni">
                 </mat-form-field>
             </div>
+            <div class="input">
+                <mat-radio-group formControlName="estado">
+                    <mat-radio-button [value]="true" color="primary">
+                      Activo
+                    </mat-radio-button>
+                    <mat-radio-button [value]="false" color="accent">
+                      Inactivo
+                    </mat-radio-button>
+                  </mat-radio-group>
+            </div>
         </div>
 
         <div class="buttons">
-            <button mat-raised-button color="primary" class="button" (click)="crearDocente()">Crear</button>
-            <button mat-raised-button class="button" (click)="onNoClick()">Canclear</button>
+            <button mat-raised-button color="primary" class="button" (click)="crearDocente()" [disabled]="docente_form.invalid" *ngIf="!docenteEncontrado">Crear</button>
+            <button mat-raised-button color="primary" class="button" (click)="actualizarDocente()" [disabled]="docente_form.invalid" *ngIf="docenteEncontrado">Actualizar</button>
+            <button mat-raised-button class="button"  (click)="onNoClick()">Canclear</button>
         </div>
 
     </form>
