@@ -65,3 +65,7 @@ Run the project.
 or
 
 `npm start`
+
+Live demo
+
+`https://school-project-e3931.firebaseapp.com/dashboard`
