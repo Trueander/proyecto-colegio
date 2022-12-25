@@ -1,27 +1,67 @@
-# ProyectoColegio
+## School Managment System
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.4.
+This is a school managment system with modules as dashboard, students, teachers, classes, course, grades, classrooms, bimesters.
+This app is an interface made in Angular and design with Angular Material and Ngx-Charts.
 
-## Development server
+Angular CLI version **13.1.4**
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# App images
 
-## Code scaffolding
+Main dashboard
+![](src/assets/dashboard.PNG)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Student's grades dashboard
+![](src/assets/student_dashboard_grades.PNG)
 
-## Build
+Clasrooms
+![](src/assets/classrooms.PNG)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Clasroom form
+![](src/assets/classroom_form.PNG)
 
-## Running unit tests
+Classes
+![](src/assets/classes.PNG)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Class form
+![](src/assets/class_form.PNG)
 
-## Running end-to-end tests
+Marks
+![](src/assets/marks.PNG)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Teachers
+![](src/assets/teachers.PNG)
 
-## Further help
+Students
+![](src/assets/students.PNG)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Courses
+![](src/assets/courses.PNG)
+
+Grades
+![](src/assets/grades.PNG)
+
+Bimesters
+![](src/assets/bimesters.PNG)
+
+
+**Installation**
+
+Clone the repository using git.
+
+`git clone https://github.com/Trueander/proyecto-colegio.git`
+
+To start the project with static data, go back to this commit.
+
+`git checkout 6aa98f46ffb110eaf6535cf90dad267bfea936c1`
+
+Open the terminal and install the dependencies.
+
+`npm install`
+
+Run the project.
+
+`ng s -o`
+
+or
+
+`npm start`
